@@ -1,6 +1,8 @@
 mod my_funcs;
+mod other_funcs;
 
-use crate::my_funcs::{add_five, divide_by_two};
+use crate::my_funcs::add_five;
+use crate::other_funcs::divide_funcs::divide_by_two;
 
 // This is the main function
 fn main() {
