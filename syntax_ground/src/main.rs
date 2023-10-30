@@ -1,3 +1,5 @@
+use std::vec;
+
 const OUR_COURSE: &str = "Rust Programming Language"; // This string is a static string stored on the stack
 
 fn main() {
@@ -200,5 +202,18 @@ println!("Removed char is {}", removed_char);
 println!("{:?}", chars);
 
 chars.iter().for_each(|c:&char| println!("char is {}", c));
+
+let chars_again:Vec<char> = vec!('J', 'O', 'S', 'H', 'U', 'A');
+dbg!(&chars_again);
+
+let collected: String = chars_again.iter().collect();
+println!("collected is {}", collected);
+
+for c in chars_again{
+    println!("char is {}", c);
+    if c == 'O'{
+        println!("Found O");
+    }
+}
 
 }
