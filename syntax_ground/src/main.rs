@@ -172,48 +172,54 @@ fn main() {
 // let my_new_floats = my_floats.map(|x: f64| x * 2.0); // This is a static array stored on the stack
 // println!("my_new_floats = {:?}", my_new_floats);
 
-let name:&str = "Martin Lubowa";
-let age:u8 = 23;
-let is_tall:bool = true;
-println!("My name is {} and I am {} years old. Am I tall? {}", name, age, is_tall);
+// let name:&str = "Martin Lubowa";
+// let age:u8 = 23;
+// let is_tall:bool = true;
+// println!("My name is {} and I am {} years old. Am I tall? {}", name, age, is_tall);
 
-let dynamic_name = String::from("Martin Lubowa");
-println!("My dynamic_name is {}", dynamic_name);
-print!("My dynamic_name is stored at {:p}", &dynamic_name);
+// let dynamic_name = String::from("Martin Lubowa");
+// println!("My dynamic_name is {}", dynamic_name);
+// print!("My dynamic_name is stored at {:p}", &dynamic_name);
 
-let str_slice:&str = &dynamic_name[0..6];
-println!("My str_slice is {}", str_slice);
+// let str_slice:&str = &dynamic_name[0..6];
+// println!("My str_slice is {}", str_slice);
 
 
-let mut chars: Vec<char> = Vec::new();
-chars.insert(0, 'M');
-chars.insert(1, 'a');
-chars.insert(2, 'r');
-chars.insert(3, 't');
-chars.insert(4, 'i');
-chars.insert(5, 'n');
-chars.push(' ');
+// let mut chars: Vec<char> = Vec::new();
+// chars.insert(0, 'M');
+// chars.insert(1, 'a');
+// chars.insert(2, 'r');
+// chars.insert(3, 't');
+// chars.insert(4, 'i');
+// chars.insert(5, 'n');
+// chars.push(' ');
 
-println!("{:?}", chars);
-dbg!(&chars);
+// println!("{:?}", chars);
+// dbg!(&chars);
 
-let removed_char = chars.pop().unwrap();
-println!("Removed char is {}", removed_char);
-println!("{:?}", chars);
+// let removed_char = chars.pop().unwrap();
+// println!("Removed char is {}", removed_char);
+// println!("{:?}", chars);
 
-chars.iter().for_each(|c:&char| println!("char is {}", c));
+// chars.iter().for_each(|c:&char| println!("char is {}", c));
 
-let chars_again:Vec<char> = vec!('J', 'O', 'S', 'H', 'U', 'A');
-dbg!(&chars_again);
+// let chars_again:Vec<char> = vec!('J', 'O', 'S', 'H', 'U', 'A');
+// dbg!(&chars_again);
 
-let collected: String = chars_again.iter().collect();
-println!("collected is {}", collected);
+// let collected: String = chars_again.iter().collect();
+// println!("collected is {}", collected);
 
-for c in chars_again{
-    println!("char is {}", c);
-    if c == 'O'{
-        println!("Found O");
-    }
-}
+// for c in chars_again{
+//     println!("char is {}", c);
+//     if c == 'O'{
+//         println!("Found O");
+//     }
+// }
+
+// Closures
+let num: i32 = 5;
+let add_num = |x: i32| x + num;
+let new_num = add_num(5);
+println!("new_num is {}", new_num);
 
 }
