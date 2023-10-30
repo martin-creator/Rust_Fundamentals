@@ -193,6 +193,12 @@ chars.insert(5, 'n');
 chars.push(' ');
 
 println!("{:?}", chars);
-dbg!(chars);
+dbg!(&chars);
+
+let removed_char = chars.pop().unwrap();
+println!("Removed char is {}", removed_char);
+println!("{:?}", chars);
+
+chars.iter().for_each(|c:&char| println!("char is {}", c));
 
 }
