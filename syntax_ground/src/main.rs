@@ -217,9 +217,20 @@ fn main() {
 // }
 
 // Closures
-let num: i32 = 5;
-let add_num = |x: i32| x + num;
-let new_num = add_num(5);
-println!("new_num is {}", new_num);
+// let num: i32 = 5;
+// let add_num = |x: i32| x + num;
+// let new_num = add_num(5);
+// println!("new_num is {}", new_num);
+
+// Number Literals  from Rust Book
+println!("BigNumber: {}", 1_000_000);
+println!("Hex: {}", 0xff);
+println!("Octal: {}", 0o77);
+println!("Binary: {}", 0b1111_0000);
+println!("Byte: {}", b'A');
+
+// Raw String Literals
+let text:&str = r#"{ "name": "Martin Lubowa", "age": 23 }"#;
+println!("text is {}", text);
 
 }
