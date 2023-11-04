@@ -1,3 +1,4 @@
+mod m1_enums;
 use std::vec;
 
 const OUR_COURSE: &str = "Rust Programming Language"; // This string is a static string stored on the stack
@@ -222,15 +223,60 @@ fn main() {
 // let new_num = add_num(5);
 // println!("new_num is {}", new_num);
 
-// Number Literals  from Rust Book
-println!("BigNumber: {}", 1_000_000);
-println!("Hex: {}", 0xff);
-println!("Octal: {}", 0o77);
-println!("Binary: {}", 0b1111_0000);
-println!("Byte: {}", b'A');
+// // Number Literals  from Rust Book
+// println!("BigNumber: {}", 1_000_000);
+// println!("Hex: {}", 0xff);
+// println!("Octal: {}", 0o77);
+// println!("Binary: {}", 0b1111_0000);
+// println!("Byte: {}", b'A');
 
-// Raw String Literals
-let text:&str = r#"{ "name": "Martin Lubowa", "age": 23 }"#;
-println!("text is {}", text);
+// // Raw String Literals
+// let text:&str = r#"{ "name": "Martin Lubowa", "age": 23 }"#;
+// println!("text is {}", text);
+
+// // Tuple
+let tup: (i32, f64, char) = (500, 6.4, 'a');
+let (x, y, z) = tup;
+println!("The value of y is: {}", y);
+
+// Binary
+let bin = 0b1111_0000;
+println!("bin is {}", bin);
+let b: u8 = 0b1111_0000;
+println!("b is {}", b);
+
+// Logic Gates
+println!("b in binary is {:08b}", b);
+println!("b in binary is {:08b}", 12);
+
+// new binary
+let a:u8 = 0b1111_0000;
+let b:u8 = 0b0000_1111;
+
+// Logic gates with operators
+println!("a & b = {:08b}", a & b);
+println!("a | b = {:08b}", a | b);
+println!("a ^ b = {:08b}", a ^ b);
+println!("!a = {:08b}", !a);
+println!("!b = {:08b}", !b);
+
+// Bitwise shift operators
+print!("a << 1 = {:08b}", a << 1);
+println!("a >> 1 = {:08b}", a >> 1);
+print!("b << 1 = {:08b}", b << 1);
+println!("b >> 1 = {:08b}", b >> 1);
+print!("~a << 1 = {:08b}", !a << 1);
+println!("~a >> 1 = {:08b}", !a >> 1);
+
+// Little Endian or Big Endian
+let num:u16 = 0b0000_0000_0000_0001;
+println!("num is {}", num);
+println!("num in binary is {:016b}", num);
+
+let big_endian: [u8; 2] = num.to_be_bytes();
+println!("big_endian is {:?}", big_endian);
+
+
+
 
 }
