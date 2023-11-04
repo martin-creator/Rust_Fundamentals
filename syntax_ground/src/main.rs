@@ -1,6 +1,7 @@
 mod m1_enums;
 mod m2_structs;
 mod m3_traits;
+mod m4_polymorphism;
 use std::vec;
 
 const OUR_COURSE: &str = "Rust Programming Language"; // This string is a static string stored on the stack
