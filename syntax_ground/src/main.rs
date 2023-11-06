@@ -6,6 +6,7 @@ mod m5_lifetimes;
 mod m6_patterns;
 mod m7_async;
 mod m8_collections;
+mod m9_decl_macros;
 use std::vec;
 
 const OUR_COURSE: &str = "Rust Programming Language"; // This string is a static string stored on the stack

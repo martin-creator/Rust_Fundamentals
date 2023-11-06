@@ -7,7 +7,10 @@ edition = "2021"
 
 [dependencies]
 ethers = "2.0.10"
+proc-macro2 = "1.0.69"
+quote = "1.0.33"
 reqwest = { version = "0.11.22", features = ["json"] }
 serde_json = "1.0.108"
+syn = { version = "2.0.39", features = ["full"] }
 tokio = { version = "1.33.0", features = ["full"] }
 
