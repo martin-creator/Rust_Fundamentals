@@ -13,4 +13,6 @@ reqwest = { version = "0.11.22", features = ["json"] }
 serde_json = "1.0.108"
 syn = { version = "2.0.39", features = ["full"] }
 tokio = { version = "1.33.0", features = ["full"] }
+my_proc_macro = { path = "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro" }
+```
 
