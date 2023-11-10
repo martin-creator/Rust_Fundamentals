@@ -1,17 +1,16 @@
-extern crate ai_macro;
+extern crate proc_macro;
 
-use ai_macro::TokenStream;
+use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use syn::{parse_macro_input, ItemFn};
 
 #[proc_macro_attribute]
 pub fn function_to_string(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    
+
     // Parse the input function
     let input_fn: ItemFn = parse_macro_input!(item as ItemFn);
 
-
-    // Create string representation of the function
+    // Create string representation of function
     let function_str: String = format!("{}", input_fn.to_token_stream());
 
     // Define a new function with the same signature as the input function
@@ -26,6 +25,5 @@ pub fn function_to_string(_attr: TokenStream, item: TokenStream) -> TokenStream 
         }
     };
 
-    // Return the output as a TokenStream
     output.into()
 }

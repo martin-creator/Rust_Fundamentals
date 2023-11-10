@@ -48,6 +48,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ai_macro"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.39",
+]
+
+[[package]]
 name = "arrayvec"
 version = "0.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3014,6 +3023,7 @@ dependencies = [
 name = "syntax_ground"
 version = "0.1.0"
 dependencies = [
+ "ai_macro",
  "ethers",
  "proc-macro2",
  "quote",

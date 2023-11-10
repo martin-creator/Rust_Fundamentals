@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./syntax_ground/my_proc_macro/Cargo.toml"
+    ]
+}
