@@ -54,6 +54,7 @@ impl ManagingAgent {
         self.agents.push(agent);
     }
 
+    // add all agents here 
     fn create_agents(&mut self) {
         self.add_agent(Box::new(AgentSolutionArchitect::new()));
         //self.add_agent(Box::new(AgentBackendDeveloper::new()));
@@ -66,8 +67,26 @@ impl ManagingAgent {
             let _agent_res: Result<(), Box<dyn std::error::Error>> =
                 agent.execute(&mut self.factsheet).await;
 
-            // let agent_info: &BasicAgent = agent.get_attributes_from_agent();
-            // dbg!(agent_info);
+            let agent_info: &BasicAgent = agent.get_attributes_from_agent();
+            dbg!(agent_info);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn tests_managing_agent() {
+        let usr_request: &str = "need a full stack app that fetches and tracks my fitness progress. Needs to include timezone info from the web.";
+
+        let mut managing_agent: ManagingAgent = ManagingAgent::new(usr_request.to_string())
+            .await
+            .expect("Error creating Managing Agent");
+
+        managing_agent.execute_project().await;
+
+        dbg!(managing_agent.factsheet);
     }
 }
