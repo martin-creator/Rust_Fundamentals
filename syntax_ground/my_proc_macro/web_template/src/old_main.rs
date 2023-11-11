@@ -2,6 +2,8 @@ use actix_cors::Cors;
 
 use actix_web::{ http::header, web, App, HttpServer, Responder, HttpResponse };
 
+use actix_files::Files;
+
 use serde::{ Deserialize, Serialize };
 
 use reqwest::Client as HttpClient;
@@ -168,15 +170,17 @@ async fn main() -> std::io::Result<()> {
                     .max_age(3600)
             )
             .app_data(data.clone())
-            .route("/task", web::post().to(create_task))
-            .route("/task", web::get().to(read_all_tasks))
-            .route("/task", web::put().to(update_task))
-            .route("/task/{id}", web::get().to(read_task))
-            .route("/task/{id}", web::delete().to(delete_task))
+            .service(Files::new("/", "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro/web_template/src").index_file("index.html"))
+            .route("/tasks", web::post().to(create_task))
+            .route("/tasks", web::get().to(read_all_tasks))
+            .route("/tasks", web::put().to(update_task))
+            .route("/tasks/{id}", web::get().to(read_task))
+            .route("/tasks/{id}", web::delete().to(delete_task))
             .route("/register", web::post().to(register))
             .route("/login", web::post().to(login))
     })
-    .bind("127.0.0.1:8080")?
+    .bind("localhost:8080")?
     .run()
     .await
+    
 }
