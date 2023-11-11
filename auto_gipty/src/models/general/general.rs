@@ -3,6 +3,10 @@ use serde::de::DeserializeOwned;
 use crate::{models::general::llm::Message, helpers::command_line::PrintCommand, apis::call_request::call_gpt};
 
 
+const CODE_TEMPLATE_PATH: &str = "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro/web_template/src/code_template.rs";
+const EXEC_MAIN_PATH: &str = "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro/web_template/src/main.rs";
+const API_SCHEMA_PATH: &str = "/mnt/c/Users/user/rust_projects/auto_gipty/schemas/api_schema.json";
+
 // Extend AI function to return certain specific messages
 pub fn extend_ai_function(ai_func: fn(&str) -> &'static str, func_input: &str) -> Message {
     let ai_function_str = ai_func(func_input);
