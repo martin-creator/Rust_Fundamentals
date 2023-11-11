@@ -72,6 +72,31 @@ pub async fn check_status_code(client: &Client, url: &str) -> Result<u16, reqwes
     Ok(response.status().as_u16())
 }
 
+
+// Check whether request url is valid
+pub async fn check_status_code(client: &Client, url: &str) -> Result<u16, reqwest::Error> {
+    let response: reqwest::Response = client.get(url).send().await?;
+    Ok(response.status().as_u16())
+}
+
+// Get Code Template
+pub fn read_code_template_contents() -> String {
+    let path: String = String::from(CODE_TEMPLATE_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
+// Get Exec Main
+pub fn read_exec_main_contents() -> String {
+    let path: String = String::from(EXEC_MAIN_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
+// Save New Backend Code
+pub fn save_backend_code(contents: &String) {
+    let path: String = String::from(EXEC_MAIN_PATH);
+    fs::write(path, contents).expect("Failed to write main.rs file");
+}
+
 #[cfg(test)]
 
 mod tests {
