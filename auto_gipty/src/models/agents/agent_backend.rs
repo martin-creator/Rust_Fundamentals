@@ -40,6 +40,7 @@ impl AgentBackendDeveloper{
         }
     }
     
+    // Junior Backend Developer
     async fn call_initial_backend_code(&mut self, factsheet: &mut FactSheet) {
         let code_template_str: String = read_code_template_contents();
 
@@ -54,6 +55,25 @@ impl AgentBackendDeveloper{
             &self.attributes.position,
             get_function_string!(print_backend_webserver_code),
             print_backend_webserver_code,
+        )
+        .await;
+
+        save_backend_code(&ai_response);
+        factsheet.backend_code = Some(ai_response);
+    }
+
+    // Senior Backend Developer
+    async fn call_improved_backend_code(&mut self, factsheet: &mut FactSheet) {
+        let msg_context: String = format!(
+            "CODE TEMPLATE: {:?} \n PROJECT_DESCRIPTION: {:?} \n",
+            factsheet.backend_code, factsheet
+        );
+
+        let ai_response: String = ai_task_request(
+            msg_context,
+            &self.attributes.position,
+            get_function_string!(print_improved_webserver_code),
+            print_improved_webserver_code,
         )
         .await;
 
