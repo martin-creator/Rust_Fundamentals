@@ -8,5 +8,5 @@ pub trait BasicTraits {
     fn get_objective(&self) -> &String;
     fn get_position(&self) -> &String;
     fn get_state(&self) -> &AgentState;
-    fn get_memory(&self) -> Vec<Message>;
+    fn get_memory(&self) -> &Vec<Message>;
 }
