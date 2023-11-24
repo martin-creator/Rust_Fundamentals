@@ -38,6 +38,7 @@ pub async fn call_gpt(messages: Vec<Message>) -> Result<String, Box<dyn std::err
         model: "gpt-3.5-turbo-0613".to_string(),
         messages,
         temperature: 0.1,
+        choices: 1,
     };
 
     // // Troubleshooting

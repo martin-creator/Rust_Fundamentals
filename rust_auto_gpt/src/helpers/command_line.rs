@@ -1,5 +1,8 @@
-use crossterm::{ style::{ Color, ResetColor, SetForegroundColor }, ExecutableCommand };
-use std::io::{ stdin, stdout, Write };
+use crossterm::{
+    style::{Color, ResetColor, SetForegroundColor},
+    ExecutableCommand,
+};
+use std::io::{stdin, stdout};
 
 #[derive(PartialEq, Debug)]
 pub enum PrintCommand {
@@ -7,7 +10,6 @@ pub enum PrintCommand {
     UnitTest,
     Issue,
 }
-
 
 impl PrintCommand {
     pub fn print_agent_message(&self, agent_pos: &str, agent_statement: &str) {
@@ -33,28 +35,27 @@ impl PrintCommand {
     }
 }
 
-
-
+// Get user request
 pub fn get_user_response(question: &str) -> String {
-    // get user request
-    let mut stdout: std::io::Stdout = std::io::stdout();
+    let mut stdout: std::io::Stdout = stdout();
 
     // Print the question in a specific color
-    stdout.execute(SetForegroundColor(Color::Blue));
+    stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
     println!("");
-    print!("{}", question);
+    println!("{}", question);
 
-    // Reset the color to the default color
+    // Reset Color
     stdout.execute(ResetColor).unwrap();
 
     // Read user input
     let mut user_response: String = String::new();
-    stdin().read_line(&mut user_response).expect("Did not enter a correct string");
+    stdin()
+        .read_line(&mut user_response)
+        .expect("Failed to read response");
 
-    // Return the user response
+    // Trim whitespace and return
     return user_response.trim().to_string();
 }
-
 
 // Get user response that code is safe to execute
 pub fn confirm_safe_code() -> bool {
@@ -97,7 +98,6 @@ pub fn confirm_safe_code() -> bool {
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {

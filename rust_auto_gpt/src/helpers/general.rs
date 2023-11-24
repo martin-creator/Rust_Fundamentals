@@ -6,15 +6,15 @@ use serde::de::DeserializeOwned;
 use std::fs;
 
 const CODE_TEMPLATE_PATH: &str =
-    "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro/web_template/src/code_template.rs";
+    "/mnt/c/Users/user/rust_projects/rust_web_template/src/code_template.rs";
 
-pub const WEB_SERVER_PROJECT_PATH: &str =
-    "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro/web_template/";
+pub const WEB_SERVER_PROJECT_PATH: &str = "/mnt/c/Users/user/rust_projects/rust_web_template/";
 
-const EXEC_MAIN_PATH: &str =
-    "/mnt/c/Users/user/rust_projects/syntax_ground/my_proc_macro/web_template/src/main.rs";
+pub const EXEC_MAIN_PATH: &str =
+    "/mnt/c/Users/user/rust_projects/rust_web_template/src/main.rs";
 
-const API_SCHEMA_PATH: &str = "/mnt/c/Users/user/rust_projects/auto_gipty/schemas/api_schema.json";
+const API_SCHEMA_PATH: &str =
+    "/mnt/c/Users/user/rust_projects/rust_auto_gpt/schemas/api_schema.json";
 
 // Extend ai function to encourage specific output
 pub fn extend_ai_function(ai_func: fn(&str) -> &'static str, func_input: &str) -> Message {
@@ -26,8 +26,7 @@ pub fn extend_ai_function(ai_func: fn(&str) -> &'static str, func_input: &str) -
   INSTRUCTION: You are a function printer. You ONLY print the results of functions.
   Nothing else. No commentary. Here is the input to the function: {}.
   Print out what the function will return.",
-        ai_function_str,
-        func_input
+        ai_function_str, func_input
     );
 
     // Return message
@@ -42,7 +41,7 @@ pub async fn ai_task_request(
     msg_context: String,
     agent_position: &str,
     agent_operation: &str,
-    function_pass: for<'a> fn(&'a str) -> &'static str
+    function_pass: for<'a> fn(&'a str) -> &'static str,
 ) -> String {
     // Extend AI function
     let extended_msg: Message = extend_ai_function(function_pass, &msg_context);
@@ -51,32 +50,28 @@ pub async fn ai_task_request(
     PrintCommand::AICall.print_agent_message(agent_position, agent_operation);
 
     // Get LLM response
-    let llm_response_res: Result<String, Box<dyn std::error::Error + Send>> = call_gpt(
-        vec![extended_msg.clone()]
-    ).await;
+    let llm_response_res: Result<String, Box<dyn std::error::Error + Send>> =
+        call_gpt(vec![extended_msg.clone()]).await;
 
     // Return Success or try again
     match llm_response_res {
         Ok(llm_resp) => llm_resp,
-        Err(_) => call_gpt(vec![extended_msg.clone()]).await.expect("Failed twice to call OpenAI"),
+        Err(_) => call_gpt(vec![extended_msg.clone()])
+            .await
+            .expect("Failed twice to call OpenAI"),
     }
 }
 
-// Performs call to LLM GPT - Decoded
+/// Performs call to LLM GPT - Decoded: GPT response into a structured Rust object
 pub async fn ai_task_request_decoded<T: DeserializeOwned>(
     msg_context: String,
     agent_position: &str,
     agent_operation: &str,
-    function_pass: for<'a> fn(&'a str) -> &'static str
+    function_pass: for<'a> fn(&'a str) -> &'static str,
 ) -> T {
-    let llm_response: String = ai_task_request(
-        msg_context,
-        agent_position,
-        agent_operation,
-        function_pass
-    ).await;
-    let decoded_response: T = serde_json
-        ::from_str(llm_response.as_str())
+    let llm_response: String =
+        ai_task_request(msg_context, agent_position, agent_operation, function_pass).await;
+    let decoded_response: T = serde_json::from_str(llm_response.as_str())
         .expect("Failed to decode ai response from serde_json");
     return decoded_response;
 }
@@ -118,10 +113,8 @@ mod tests {
 
     #[test]
     fn tests_extending_ai_function() {
-        let extended_msg: Message = extend_ai_function(
-            convert_user_input_to_goal,
-            "dummy variable"
-        );
+        let extended_msg: Message =
+            extend_ai_function(convert_user_input_to_goal, "dummy variable");
         dbg!(&extended_msg);
         assert_eq!(extended_msg.role, "system".to_string());
     }
@@ -135,8 +128,9 @@ mod tests {
             ai_func_param,
             "Managing Agent",
             "Defining user requirements",
-            convert_user_input_to_goal
-        ).await;
+            convert_user_input_to_goal,
+        )
+        .await;
 
         assert!(res.len() > 20);
     }

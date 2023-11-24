@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      h1 {
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      label {
+        margin-bottom: 5px;
+        color: #007bff;
+      }
+
+      input {
+        padding: 8px;
+        margin-bottom: 15px;
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      li span {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      li button {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      li button:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Task Manager</h1>
+
+    <form id="taskForm">
+      <label for="taskId">Task ID:</label>
+      <input type="number" id="taskId" required />
+      <label for="taskName">Task Name:</label>
+      <input type="text" id="taskName" required />
+      <button type="button" onclick="createTask()">Create Task</button>
+    </form>
+
+    <ul id="taskList"></ul>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        loadTasks();
+      });
+
+      function loadTasks() {
+        fetch("http://localhost:8080/tasks")
+          .then((response) => response.json())
+          .then((tasks) => {
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+
+            tasks.forEach((task) => {
+              const li = document.createElement("li");
+              li.innerHTML = `<span>ID: ${task.id}, Name: ${task.name}</span> <button onclick="deleteTask(${task.id})">Delete</button>`;
+              taskList.appendChild(li);
+            });
+          });
+      }
+
+      function createTask() {
+        const taskId = document.getElementById("taskId").value;
+        const taskName = document.getElementById("taskName").value;
+
+        fetch(`http://localhost:8080/tasks`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json", // Include Accept header for CORS
+          },
+          body: JSON.stringify({
+            id: parseInt(taskId),
+            name: taskName,
+            completed: false,
+          }),
+        }).then((response) => {
+          if (response.ok) {
+            loadTasks();
+            document.getElementById("taskId").value = "";
+            document.getElementById("taskName").value = "";
+          }
+        });
+      }
+
+      function deleteTask(id) {
+        fetch(`http://localhost:8080/tasks/${id}`, {
+          method: "DELETE",
+        }).then((response) => {
+          if (response.ok) {
+            loadTasks();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
+<!-- In this code, I updated the fetch URLs to use /tasks for general task operations and /tasks/{id} for specific task operations. Adjustments were made to the createTask and deleteTask functions to match the new paths on the server. -->

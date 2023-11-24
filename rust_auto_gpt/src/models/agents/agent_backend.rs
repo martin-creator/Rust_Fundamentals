@@ -4,10 +4,10 @@ use crate::ai_functions::aifunc_backend::{
 };
 use crate::helpers::general::{
     check_status_code, read_code_template_contents, read_exec_main_contents, save_api_endpoints,
-    save_backend_code,WEB_SERVER_PROJECT_PATH
+    save_backend_code, WEB_SERVER_PROJECT_PATH,
 };
 
-use crate::helpers::command_line::{PrintCommand, confirm_safe_code};
+use crate::helpers::command_line::{confirm_safe_code, PrintCommand};
 use crate::helpers::general::ai_task_request;
 use crate::models::agent_basic::basic_agent::{AgentState, BasicAgent};
 use crate::models::agents::agent_traits::{FactSheet, RouteObject, SpecialFunctions};
@@ -22,11 +22,10 @@ use tokio::time;
 pub struct AgentBackendDeveloper {
     attributes: BasicAgent,
     bug_errors: Option<String>,
-    bug_count: u8
+    bug_count: u8,
 }
 
-
-impl AgentBackendDeveloper{
+impl AgentBackendDeveloper {
     pub fn new() -> Self {
         let attributes: BasicAgent = BasicAgent {
             objective: "Develops backend code for webserver and json database".to_string(),
@@ -41,8 +40,7 @@ impl AgentBackendDeveloper{
             bug_count: 0,
         }
     }
-    
-    // Junior Backend Developer
+
     async fn call_initial_backend_code(&mut self, factsheet: &mut FactSheet) {
         let code_template_str: String = read_code_template_contents();
 
@@ -60,13 +58,10 @@ impl AgentBackendDeveloper{
         )
         .await;
 
-        // print!(&ai_response)
-
         save_backend_code(&ai_response);
         factsheet.backend_code = Some(ai_response);
     }
 
-    // Senior Backend Developer
     async fn call_improved_backend_code(&mut self, factsheet: &mut FactSheet) {
         let msg_context: String = format!(
             "CODE TEMPLATE: {:?} \n PROJECT_DESCRIPTION: {:?} \n",
@@ -104,8 +99,6 @@ impl AgentBackendDeveloper{
         factsheet.backend_code = Some(ai_response);
     }
 
-
-    // Extract Rest API Endpoints
     async fn call_extract_rest_api_endpoints(&self) -> String {
         let backend_code: String = read_exec_main_contents();
 
@@ -122,7 +115,6 @@ impl AgentBackendDeveloper{
 
         ai_response
     }
-
 }
 
 #[async_trait]
@@ -197,7 +189,7 @@ impl SpecialFunctions for AgentBackendDeveloper {
                         self.bug_errors = Some(error_str);
 
                         // Exit if too many bugs
-                        if self.bug_count > 5 {
+                        if self.bug_count > 2 {
                             PrintCommand::Issue.print_agent_message(
                                 self.attributes.position.as_str(),
                                 "Backend Code Unit Testing: Too many bugs found in code",
@@ -323,11 +315,7 @@ impl SpecialFunctions for AgentBackendDeveloper {
         }
         Ok(())
     }
-
-
-
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -361,3 +349,5 @@ mod tests {
             .expect("Failed to execute Backend Developer agent");
     }
 }
+
+

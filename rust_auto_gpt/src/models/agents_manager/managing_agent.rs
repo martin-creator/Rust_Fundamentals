@@ -54,7 +54,6 @@ impl ManagingAgent {
         self.agents.push(agent);
     }
 
-    // add all agents here 
     fn create_agents(&mut self) {
         self.add_agent(Box::new(AgentSolutionArchitect::new()));
         self.add_agent(Box::new(AgentBackendDeveloper::new()));

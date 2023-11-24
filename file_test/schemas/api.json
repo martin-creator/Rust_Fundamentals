@@ -1,0 +1,12 @@
+{
+            "api_endpoints": [
+                {
+                    "name": "get_users",
+                    "url": "https://jsonplaceholder.typicode.com/users"
+                },
+                {
+                    "name": "get_posts",
+                    "url": "https://jsonplaceholder.typicode.com/posts"
+                }
+            ]
+        }
